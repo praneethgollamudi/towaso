@@ -11,15 +11,23 @@
     
         <link rel="stylesheet" href="css/style1.css">
 
-    
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>  
     
     
   </head>
 
   <body>
 
-    <div class="form">
+
+ 
       
+
+    <div class="form">
+     
+<button type="button" class="button button-block" onclick="window.history.back();" >HOME</button>
+
+    
       <ul class="tab-group">
 	    <li class="tab active"><a href="#login">Log In</a></li>
         <li class="tab"><a href="#signup">Sign Up</a></li>
@@ -30,49 +38,86 @@
 	  <div id="login">   
           <h1>Welcome Back!</h1>
           
-          <form action="/" method="post">
+          
           
             <div class="field-wrap">
             <label>
-              User name<span class="req">*</span>
+              Email <span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off"/>
+            <input type="email" required autocomplete="off" id='lemail'/>
           </div>
 		  
 		  
-          
           <div class="field-wrap">
             <label>
               Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input type="password" required autocomplete="off" id='lpwd'/>
           </div>
           
           <p class="forgot"><a href="#">Forgot Password?</a></p>
           
-          <button class="button button-block"/>Log In</button>
+          <button type="submit" class="button button-block" id='lsubmit'/>Log In</button>
           
-          </form>
 
+
+
+
+
+
+<script>
+      
+      var ref = new Firebase('https://radiant-fire-2731.firebaseio.com/');
+      
+      $('#lsubmit').click(function() {
+       
+         
+          var lemail = $('#lemail').val();
+          var lpwd = $('#lpwd').val();
+   
+         ref.authWithPassword({
+   email   : lemail,
+  password : lpwd
+}, function(error, authData) {
+  if (error) {
+  alert("Login Failed!", error);
+   $('#lemail').val('');
+    $('#lpwd').val('');}
+  else {
+          alert("Your login is successful");
+
+         $('#lemail').val('');
+          $('#lpwd').val('');
+   window.history.back();
+  
+            
+      }
+   });     
+ });   
+
+
+
+</script>
+
+      
         </div>
         <div id="signup">   
           <h1>Sign Up for Free</h1>
           
-          <form action="/" method="post">
           
           <div class="top-row">
             <div class="field-wrap">
               <label>
                 First Name<span class="req">*</span>
               </label>
-              <input type="text" required autocomplete="off" />
+              <input type="text" required autocomplete="off" id='fname'/>
             </div>
         
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
               </label>
-              <input type="text"required autocomplete="off"/>
+              <input type="text"required autocomplete="off" id='lname'/>
             </div>
           </div>
 
@@ -80,36 +125,36 @@
             <label>
               Email Address<span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off"/>
+            <input type="email"required autocomplete="off" id='email'/>
           </div>
 		  
 		  <div class="field-wrap">
             <label>
-              Phone Number<span class="req">*</span>
+              Phone Number<span class="req" >*</span>
             </label>
-            <input type="email"required autocomplete="off"/>
+            <input type="text"required autocomplete="off" id='phone'/>
           </div>
 		  
 		  <div class="field-wrap">
             <label>
-              District<span class="req">*</span>
+              <span class="req"></span>
             </label>
-            <input type="email"required autocomplete="off"/>
+            <input type="text"required autocomplete="off" id='district' value="DHANBAD"/>
           </div>
 		  
 		  <div class="top-row">
             <div class="field-wrap">
               <label>
-                Ward Number<span class="req">*</span>
+                Ward Number<span class="req"></span>
               </label>
-              <input type="text" required autocomplete="off" />
+              <input type="text" required autocomplete="off" value='Ward Number-22' readonly/>
             </div>
         
             <div class="field-wrap">
               <label>
                 Street<span class="req">*</span>
               </label>
-              <input type="text"required autocomplete="off"/>
+              <input type="text"required autocomplete="off" id='street'/>
             </div>
           </div>
 		  
@@ -118,14 +163,14 @@
               <label>
                 Floor<span class="req">*</span>
               </label>
-              <input type="text" required autocomplete="off" />
+              <input type="text" required autocomplete="off" id='floor'/>
             </div>
         
             <div class="field-wrap">
               <label>
                 House Number<span class="req">*</span>
               </label>
-              <input type="text"required autocomplete="off"/>
+              <input type="text"required autocomplete="off" id='house'/>
             </div>
           </div>
 		  
@@ -133,7 +178,7 @@
             <label>
               Other
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input type="text"required autocomplete="off" id='other'/>
           </div>
 		  
 		  <div class="top-row-1">
@@ -141,21 +186,21 @@
               <label>
                 Latitude
               </label>
-              <input type="text" required autocomplete="off" />
+              <input type="text" required autocomplete="off" id='latitude' readonly/>
             </div>
 			
             <div class="field-wrap">
               <label>
                 Longitude
               </label>
-              <input type="text"required autocomplete="off"/>
+              <input type="text"required autocomplete="off" id='longitude' readonly/>
             </div>
 			
 			<div class="field-wrap">
               <label>
                 Height
               </label>
-              <input type="text"required autocomplete="off"/>
+              <input type="text"required autocomplete="off" id='height' readonly/>
             </div>
           </div>
           
@@ -163,20 +208,23 @@
             <label>
               Set A Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input type="password"required autocomplete="off" id='pwd'/>
           </div>
 		  
 		  <div class="field-wrap">
             <label>
               Confirm Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input type="password"required autocomplete="off" id='cpwd'/>
           </div>
           
-          <button type="submit" class="button button-block"/>Get Started</button>
+          <button type="submit" class="button button-block" id='submit'/>Get Started</button>
           
-          </form>
 
+          
+
+     <p id='text'></p>
+     
         </div>
         
       </div><!-- tab-content -->
@@ -184,9 +232,88 @@
 </div> <!-- /form -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
+  
+
         <script src="js/index1.js"></script>
 
-    
+ 
+   
+<script>
+      
+      var ref = new Firebase('https://radiant-fire-2731.firebaseio.com/');
+
+
+      
+      $('#submit').click(function() {
+       
+          var fname = $('#fname').val();
+          var lname = $('#lname').val();
+          var email = $('#email').val();
+          var phone = $('#phone').val();
+          var dis = "DHANBAD";
+          var ward = "22";
+          var street = $('#street').val();
+          var house = $('#house').val();
+          var floor = $('#floor').val();
+          var other = $('#other').val();
+          var pwd = $('#pwd').val();
+          var cpwd = $('#cpwd').val();
+          var x="DHN2201";
+          var y=x.concat(floor);
+          var uid=y.concat(house);
+         
+     if(pwd==cpwd)
+     {
+               
+           ref.createUser({
+     email  : email, 
+      password : pwd},
+       function(error, userData) {
+        if (error) {
+         alert("Error creating user ");
+          } else {
+
+          ref.child(uid).set({fname:fname,lname:lname,phone:phone,email:email,street:street,house:house,floor:floor,ward:ward,district:dis,other:other,password:pwd});
+
+        
+
+
+ alert("Successfully created user account with uid "+ uid);
+
+      $('#fname').val('');
+          $('#lname').val('');
+          $('#email').val('');
+         $('#phone').val('');
+         $('#street').val('');
+         $('#floor').val('');
+        $('#other').val('');
+         $('#house').val('');
+         $('#pwd').val('');
+         $('#cpwd').val('');
+
+
+
+window.history.back();
+
+
+        }
+     });
+
+
+}      
+  else 
+        alert("Please check password");    
+   
+});  
+
+
+     
+</script>
+
+
+
+
+   
     
     
   </body>
